@@ -8,3 +8,5 @@ cd frp
 nohup ./frps -c frps.ini >/dev/null 2>&1 &
 
 ```
+用户名
+runneradmin
