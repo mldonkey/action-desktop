@@ -1,6 +1,5 @@
 name: Windows
 on:
-  push:
   workflow_dispatch:
     inputs:
       my_value:
@@ -15,9 +14,9 @@ jobs:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
+      - run: echo $MY_VALUE
       - run: ./install-frp.ps1
-      
-      - name: run frpc [my_value $MY_VALUE]
+      - name: run frpc [${{ github.event.inputs.my_value }}]
         env:
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
           FRPS_DOMAIN: ${{ secrets.FRPS_DOMAIN }}
