@@ -1,5 +1,6 @@
 name: Windows
 on:
+  push:
   workflow_dispatch:
     inputs:
       my_value:
@@ -7,6 +8,7 @@ on:
         required: true
         default: 'input test'
         type: string
+
 jobs:
   build:
     runs-on: windows-2019
