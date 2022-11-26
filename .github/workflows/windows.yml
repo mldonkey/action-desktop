@@ -1,12 +1,20 @@
 name: Windows
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      my_value:
+        description: 'My input value'
+        required: true
+        default: 'input test'
+        type: string
 jobs:
   build:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
       - run: ./install-frp.ps1
-      - name: run frpc
+      - run: echo "[my_value: ${{ github.event.inputs.my_value }}]"
+      - name: run frpc 
         env:
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
           FRPS_DOMAIN: ${{ secrets.FRPS_DOMAIN }}
