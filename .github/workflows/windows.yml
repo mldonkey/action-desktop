@@ -8,15 +8,16 @@ on:
         required: true
         default: 'input test'
         type: string
-
+env:
+  MY_VALUE: ${{ github.event.inputs.my_value }}
 jobs:
   build:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
       - run: ./install-frp.ps1
-      - run: echo "[my_value: ${{ github.event.inputs.my_value }}]"
-      - name: run frpc 
+      
+      - name: run frpc [my_value $MY_VALUE]
         env:
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
           FRPS_DOMAIN: ${{ secrets.FRPS_DOMAIN }}
