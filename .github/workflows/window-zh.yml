@@ -1,0 +1,24 @@
+name: Windows-zh
+on:
+  workflow_dispatch:
+    inputs:
+      my_value:
+        description: 'My input value'
+        required: true
+        default: 'input test'
+        type: string
+env:
+  MY_VALUE: ${{ github.event.inputs.my_value }}
+  LANG: zh_CN.UTF-8
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo $MY_VALUE
+      - run: ./install-frp.ps1
+      - name: run frpc [${{ github.event.inputs.my_value }}]
+        env:
+          RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
+          FRPS_DOMAIN: ${{ secrets.FRPS_DOMAIN }}
+        run: ./run-frpc.ps1
