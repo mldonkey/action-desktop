@@ -1,4 +1,4 @@
-name: Windows-zh
+name: Windows-last
 on:
   workflow_dispatch:
     inputs:
@@ -9,7 +9,6 @@ on:
         type: string
 env:
   MY_VALUE: ${{ github.event.inputs.my_value }}
-  LANG: zh_CN.UTF-8
 jobs:
   build:
     runs-on: windows-latest
