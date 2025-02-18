@@ -17,7 +17,7 @@ jobs:
       - run: echo $MY_VALUE
       - run: ./install-frp.ps1
       - run: ./install-meta2ctrl.ps1
-      #- run: ./shurufa.ps1
+      - run: ./shurufa.ps1
       - name: run frpc [${{ github.event.inputs.my_value }}]
         env:
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
