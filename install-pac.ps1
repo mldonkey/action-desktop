@@ -1,7 +1,7 @@
 ﻿# 设置执行策略（仅限当前会话）
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
-if({{ .Envs.REMOTE_PORT }}){
+if({{ .Envs.INSTALL }}){
 
     # 定义变量
     $downloadUrl = "https://files.cnblogs.com/files/mldonkey/package.zip"  # 替换为实际的下载链接
