@@ -25,8 +25,9 @@ jobs:
       #- run: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ./shurufa.ps1
       - run: powershell ./shurufa.ps1
       - run: powershell ./install-pac.ps1
-      - name: run frpc [${{ github.event.inputs.my_value }}]
+      - name: run frpc
         env:
+          REMOTE_PORT: ${{github.event.inputs.remote_port }}
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
           FRPS_DOMAIN: ${{ secrets.FRPS_DOMAIN }}
         run: ./run-frpc.ps1
