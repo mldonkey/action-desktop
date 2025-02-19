@@ -27,7 +27,7 @@ jobs:
       - name: install Apps
         env:
          install_pac: ${{ github.event.inputs.install_package}}
-        if: env.install_pac
+        if: env.install_pac == true
         run: echo installpac:${{ env.install_pac }}
         #run: if( ${{ github.event.inputs.install_package || false}} ){ powershell ./install-pac.ps1 }
         
