@@ -25,8 +25,12 @@ jobs:
       - run: powershell ./shurufa.ps1
       
       - name: install Apps
-        if: ${{ github.event.inputs.install_package || false }}
-        run: powershell ./install-pac.ps1
+        env:
+         install_pac: ${{ github.event.inputs.install_package}}
+        if: env.install_pac
+        run: echo installpac:${{ env.install_pac }}
+        #run: if( ${{ github.event.inputs.install_package || false}} ){ powershell ./install-pac.ps1 }
+        
         
       - name: run frpc
         env:
