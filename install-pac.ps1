@@ -1,6 +1,6 @@
 ﻿# 设置执行策略（仅限当前会话）
 Set-ExecutionPolicy Bypass -Scope Process -Force
-
+$ProgressPreference = 'SilentlyContinue'
 if($env:INSTALL -eq "true"){
     Write-Host "install: $($env:INSTALL)"
     # 定义变量
@@ -18,7 +18,7 @@ if($env:INSTALL -eq "true"){
     
     # 下载 ZIP 文件
     Write-Host "Downloading ZIP file from $downloadUrl..."
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipFilePath
+    Invoke-WebRequest -Uri $downloadUrl -OutFile $zipFilePath -UseBasicParsing
     
     
     # 解压 ZIP 文件
