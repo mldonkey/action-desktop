@@ -3,28 +3,31 @@ on:
   workflow_dispatch:
     inputs:
       remote_port:
-        description: 'remote port'
+        description: 'Remote port'
         required: true
         default: '6000'
         type: string
-      my_value:
-        description: 'My input value'
+        
+      install_package:
+        description: 'Need install Apps?'
         required: true
-        default: 'input test'
-        type: string
-env:
-  MY_VALUE: ${{ github.event.inputs.my_value }}
+        default: false
+        type: boolean
+        
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo $MY_VALUE
+      
       - run: ./install-frp.ps1
       - run: ./install-meta2ctrl.ps1
-      #- run: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ./shurufa.ps1
       - run: powershell ./shurufa.ps1
-      - run: powershell ./install-pac.ps1
+      
+      - name: install Apps
+        if: github.event.inputs.install_package
+        run: powershell ./install-pac.ps1
+        
       - name: run frpc
         env:
           REMOTE_PORT: ${{github.event.inputs.remote_port }}
