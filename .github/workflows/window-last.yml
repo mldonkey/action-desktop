@@ -2,6 +2,11 @@ name: Windows-last
 on:
   workflow_dispatch:
     inputs:
+      remote_port:
+        description: 'remote port'
+        required: true
+        default: '6000'
+        type: string
       my_value:
         description: 'My input value'
         required: true
@@ -17,7 +22,9 @@ jobs:
       - run: echo $MY_VALUE
       - run: ./install-frp.ps1
       - run: ./install-meta2ctrl.ps1
-      - run: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ./shurufa.ps1
+      #- run: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe ./shurufa.ps1
+      - run: powershell ./shurufa.ps1
+      - run: powershell ./install-pac.ps1
       - name: run frpc [${{ github.event.inputs.my_value }}]
         env:
           RUNNER_PASSWORD: ${{ secrets.RUNNER_PASSWORD }}
