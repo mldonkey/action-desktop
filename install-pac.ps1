@@ -1,8 +1,8 @@
 ﻿# 设置执行策略（仅限当前会话）
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
-if({{ .Envs.INSTALL }}=="true"){
-    Write-Host "install: {{ .Envs.INSTALL }}"
+if($env:INSTALL=="true"){
+    Write-Host "install: $($env:INSTALL)"
     # 定义变量
     $downloadUrl = "https://files.cnblogs.com/files/mldonkey/package.zip"  # 替换为实际的下载链接
     $tempDir = $env:TEMP
