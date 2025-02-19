@@ -21,7 +21,9 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: install Apps
-        run: ${{ github.event.inputs.install_package }} && powershell ./install-pac.ps1
+        env:
+          INSTALL: ${{ github.event.inputs.install_package }}
+        run: powershell ./install-pac.ps1
         
       - run: ./install-frp.ps1
       - run: ./install-meta2ctrl.ps1
