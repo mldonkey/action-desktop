@@ -11,7 +11,7 @@ $Jobs = @()
 $outputStream = New-Object System.Collections.ArrayList
 
 # $sripts=Get-ChildItem -Path $scriptPath -Filter "*.ps1"
-$sripts=@('./run-frpc.ps1','./install-meta2ctrl.ps1','./shurufa.ps1','./install-pac.ps1')
+$scripts=@('./run-frpc.ps1','./install-meta2ctrl.ps1','./shurufa.ps1','./install-pac.ps1')
 
 # 获取所有 PS1 文件
 $scripts | ForEach-Object {
