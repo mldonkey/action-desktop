@@ -12,21 +12,34 @@ $outputStream = New-Object System.Collections.ArrayList
 
 # $sripts=Get-ChildItem -Path $scriptPath -Filter "*.ps1"
 $scripts=@('./run-frpc.ps1','./install-meta2ctrl.ps1','./shurufa.ps1','./install-pac.ps1')
+# $scripts=@("./1.ps1","./2.ps1","./3.ps1","./4.ps1")
+
+Write-Host "准备执行的脚本列表："
+$scripts | ForEach-Object { Write-Host $_ }
 
 # 获取所有 PS1 文件
-$scripts | ForEach-Object {
-    $scriptName = $_.Name
+foreach ($script in $scripts) {
+    $scriptName = Split-Path $script -Leaf
+    Write-Host "`n开始处理脚本: $scriptName" -ForegroundColor Cyan
     
     # 创建包装脚本块
     $ScriptBlock = {
         param($scriptPath, $scriptName)
         
         try {
-            # 使用 Write-Host 进行实时输出
             Write-Host "[$scriptName] 开始执行"
             
-            # 执行实际的脚本
-            & $scriptPath | ForEach-Object {
+            # 检查文件是否存在
+            if (-not (Test-Path $scriptPath)) {
+                throw "找不到脚本文件: $scriptPath"
+            }
+            
+            # 读取并执行脚本
+            $scriptContent = Get-Content -Path $scriptPath -Raw
+            Write-Host "[$scriptName] 已读取脚本内容，长度: $($scriptContent.Length) 字符"
+            
+            $scriptBlock = [ScriptBlock]::Create($scriptContent)
+            & $scriptBlock | ForEach-Object {
                 Write-Host "[$scriptName] $_"
             }
             
@@ -40,8 +53,10 @@ $scripts | ForEach-Object {
     $PowerShell = [powershell]::Create().AddScript($ScriptBlock)
     $PowerShell.RunspacePool = $RunspacePool
     
-    # 添加参数
-    [void]$PowerShell.AddArgument($_.FullName)
+    # 添加参数时使用完整路径
+    $fullPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($script)
+    Write-Host "使用完整路径: $fullPath"
+    [void]$PowerShell.AddArgument($fullPath)
     [void]$PowerShell.AddArgument($scriptName)
     
     # 设置输出流
